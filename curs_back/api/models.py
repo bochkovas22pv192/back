@@ -13,22 +13,26 @@ def generate_code():
     return ucode
 
 # Create your models here.
-
-class Lections(models.Model):
-    name = models.CharField(max_length=100, default="name")
-    text = models.TextField()
-    date = models.DateField(null=False, auto_now_add=True)
-
-
+class Users(models.Model):
+    login = models.CharField(max_length=50)
+    password = models.CharField(max_length=50)
 
 
 class Curs(models.Model):
     code = models.CharField(max_length=8, unique=True, null=False)
     name = models.CharField(max_length=100, default="name")
     descr = models.TextField()
+    members = models.ManyToManyField(Users)
+    author = models.ForeignKey(Users, on_delete=models.CASCADE)
     #preview_img = models.ImageField()
     #main_img = models.ImageField()
 
-class Users(models.Model):
-    login = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
+
+class Lections(models.Model):
+    name = models.CharField(max_length=100, default="name")
+    text = models.TextField()
+    date = models.DateField(null=False, auto_now_add=True)
+    curs = models.ForeignKey(Curs, on_delete=models.CASCADE)
+
+
+
