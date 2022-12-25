@@ -1,5 +1,5 @@
 import { useNavigate, NavigateFunction } from "react-router-dom";
-import accContext from "../authContext";
+import accContext from "./authContext";
 import React from 'react';
 
 

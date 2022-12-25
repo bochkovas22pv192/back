@@ -1,10 +1,18 @@
-import React from 'react';
+
+import React, { useEffect } from 'react';
 import '../css/home.css';
-import accContext from "../authContext";
+import accContext from "../components/authContext";
 import CursBaner from '../components/cursBaner';
 import { Link } from "react-router-dom";
+import CursData from '../models/CursData';
+import {getCurs} from '../apis/cursApi';
 function Home() {
 
+    const [cursData, setCursData] = React.useState<CursData[]>([]);
+
+    useEffect( () =>{
+        getCurs(setCursData);
+    }, [])
 
     const isLogin = React.useContext(accContext);
 return (
@@ -18,13 +26,7 @@ return (
      }       
      {isLogin?.auth === true && 
         <section className="curs-list">
-            <CursBaner />
-            <CursBaner />
-            <CursBaner />
-            <CursBaner />
-            <CursBaner />
-            <CursBaner />
-            
+            {cursData.map(curs => <CursBaner {...curs} key={curs.id} />)}
         </section>
     }
  </main>

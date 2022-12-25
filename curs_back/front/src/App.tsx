@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from "react-router-dom";
-import AuthContext from './authContext'
+import AuthContext from './components/authContext'
 import './css/App.css';
 import Footer from './components/footer';
 import Header from './components/header';

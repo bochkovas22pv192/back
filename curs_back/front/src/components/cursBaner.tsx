@@ -1,20 +1,22 @@
 import React from 'react';
 import '../css/cursBaner.css';
 import { Link } from "react-router-dom";
-function CursBaner() {
-return (
+import CursData from '../models/CursData'
+const CursBaner = (props: CursData) =>{
+
+    return (
     <div className="cur">
                 <Link className='home-curs-link' to="/curs/">
                     <div>
                         
-                        <img src="https://img.lovepik.com/original_origin_pic/19/01/08/5016ef557fa043da01371d7a86300fa3.png_wh860.png"  alt="curs-img" />
+                        <img src={props.preview_img}  alt="curs-img" />
                         
                     </div>
                     <span>
                         <div className="curs-name">
-                            <h3>Курс по программированию</h3>
+                            <h3>{props.name}</h3>
                         </div>
-                        <h5 className="curs-disc"> Описание курсов по программированию </h5>
+                        <h5 className="curs-disc"> {props.descr} </h5>
                     </span>
                 </Link>
     </div>

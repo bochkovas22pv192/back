@@ -1,7 +1,7 @@
 import "../css/header.css";
 import { Link } from "react-router-dom";
 import React from 'react';
-import accContext from "../authContext";
+import accContext from "./authContext";
 import ExitButton from '../components/exitButton';
 import SideMenuPart from '../components/sideMenuPart';
 

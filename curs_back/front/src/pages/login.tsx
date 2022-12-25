@@ -1,7 +1,14 @@
 import React from 'react';
 import '../css/login.css';
-import authContext from "../authContext";
+import authContext from "../components/authContext";
 import { useNavigate, NavigateFunction} from "react-router-dom";
+//import { User } from "../models/UsersData";
+import { postLogin } from "../apis/loginApi";
+
+export interface LoginValues {
+    username: string,
+    password: string
+}
 
 function Login() {
 
@@ -12,13 +19,15 @@ function Login() {
     const aсс_context = React.useContext(authContext);
 
 
+
     function handleSubmit(event: any) {
         event.preventDefault()
         setPressed(true)
-        
-        
         if (login !== '' && password !== '') {
-            aсс_context!.setAuth(true);
+            const userInfo = {} as LoginValues
+            userInfo.username = login
+            userInfo.password = password
+            postLogin(userInfo, aсс_context)
             navigate('/')
         }
     };
