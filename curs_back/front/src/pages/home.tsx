@@ -6,11 +6,14 @@ import CursBaner from '../components/cursBaner';
 import { Link } from "react-router-dom";
 import CursData from '../models/CursData';
 import {getCurs} from '../apis/cursApi';
+
+
 function Home() {
 
     const [cursData, setCursData] = React.useState<CursData[]>([]);
 
     useEffect( () =>{
+        console.log(isLogin?.auth === true)
         getCurs(setCursData);
     }, [])
 
