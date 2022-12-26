@@ -1,9 +1,9 @@
 import Axios, {AxiosError, AxiosResponse} from 'axios';
 import { baseURL } from '../constants';
-import NewsData from '../models/CursData';
+import CursData from '../models/CursData';
 
 
-const newsPath = baseURL + '/curs/'
+const cursPath = baseURL + '/curs/'
 
 function parseJwt (token: any) {
     console.log(token)
@@ -14,18 +14,30 @@ function parseJwt (token: any) {
     }).join(''));
     return JSON.parse(jsonPayload);
 }
-export async function getCurs(resultHandler: (data: any)=>void){
-    console.log("error1")
+export async function getCurs(resultHandler: (data: any)=>void, id:string=''){
+    if (id.length){
+        Axios.get(cursPath+id+'/',
+            { params:{}, responseType: "json" }
+        ).then
+        (result => {
+            let data: CursData[] = (result as AxiosResponse<CursData[]>).data;
+            resultHandler(data);
+        })
+        .catch((error: AxiosError) => {
+            alert(error.message);
+        });
+    }
+    else{
     const user_name = parseJwt(localStorage.getItem('access')).name
     Axios.get(
-        newsPath,
+        cursPath,
         { params:{username:user_name}, responseType: "json" }
     ).then
     (result => {
-        const data: NewsData[] = (result as AxiosResponse<NewsData[]>).data;
+        const data: CursData[] = (result as AxiosResponse<CursData[]>).data;
         resultHandler(data)
     })
     .catch((error: AxiosError) => {
         alert(error.message);
-    });
+    });}
 }

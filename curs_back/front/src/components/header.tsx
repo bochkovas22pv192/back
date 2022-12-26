@@ -1,14 +1,26 @@
 import "../css/header.css";
 import { Link } from "react-router-dom";
-import React from 'react';
+import React, { useEffect } from 'react';
 import accContext from "./authContext";
 import ExitButton from '../components/exitButton';
 import SideMenuPart from '../components/sideMenuPart';
+import CursData from '../models/CursData';
+import {getCurs} from '../apis/cursApi';
 
 
 
 function Header() {
-    const isLogin = React.useContext(accContext);   
+    const isLogin = React.useContext(accContext);
+    const [cursData, setCursData] = React.useState<CursData[]>([]);
+
+    useEffect( () =>{
+        //if (isLogin?.auth === true){
+        if (localStorage.getItem('access') !== undefined){
+            console.log("nehahahahha")
+            getCurs(setCursData);
+        }
+        
+    }, [])
 
     return (
         <header>
@@ -22,20 +34,7 @@ function Header() {
                                 {isLogin?.auth === false && <div className="sidemenu-logout-text">Здесь будут ваши курсы</div>}
                                 {isLogin?.auth === true && 
                                 <div>
-                                    <SideMenuPart />
-                                    <SideMenuPart />
-                                    <SideMenuPart />
-                                    <SideMenuPart />
-                                    <SideMenuPart />
-                                    <SideMenuPart />
-                                    <SideMenuPart />
-                                    <SideMenuPart />
-                                    <SideMenuPart />
-                                    <SideMenuPart />
-                                    <SideMenuPart />
-                                    <SideMenuPart />
-                                    <SideMenuPart />
-                                    <SideMenuPart />
+                                    {cursData.map(curs => <SideMenuPart {...curs} key={curs.id} />)}
                                     </div>}
                             </div>
                         </div>

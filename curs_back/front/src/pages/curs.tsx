@@ -1,25 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../css/curs.css';
 import { Link } from "react-router-dom";
-function Curs() {
+import { useParams } from 'react-router-dom'
+import CursData from '../models/CursData'
+import LectionsData from '../models/LectionsData'
+import {getCurs} from '../apis/cursApi';
+import {getLections} from '../apis/lectionsApi';
+import CursLentaPart from '../components/cursLentaPart';
+
+const Curs = () =>  {
+
+    const {cursId} = useParams()
+    const [cursData, setCursData] = React.useState<CursData>({
+        id: 0,code:'',name:'',descr:'', preview_img:'', main_img:'', author:'', date:''});
+    const [lectionData, setLectionsData] = React.useState<LectionsData[]>([]);
+
+    useEffect( () =>{
+        getCurs(setCursData, cursId)
+    }, [cursId])
+
+    useEffect( () =>{
+        getLections(setLectionsData,'', cursId)
+    }, [cursId])
+
 return (
     <div className="container">
         <div className="title-all">
-            <img className="curs-logo" src="https://thumbs.dreamstime.com/b/programaci%C3%B3n-codificaci%C3%B3n-de-concepto-plano-54998068.jpg" alt="curs-main-img"  />
+            <img className="curs-logo" src={cursData.main_img} alt="curs-main-img"  />
             <div className="title">
-                    <h3> Курс по программированию для начинающих </h3>
+                    <h3> {cursData.name} </h3>
             </div>
         </div>
        
         <section className="lenta">
+        {lectionData.map(lections => <CursLentaPart {...lections} key={lections.id} />)}
 
-            <Link className="curs-task-name" to="/curs/task/">
-                <div className="lenta-title">
-                    
-                        Лекция 1. Рор. 
-                    
-                </div>
-            </Link>
         <div className="leave-button"> <button type="button"  className="btn  btn-outline-danger btn-lg">Покинуть курс</button></div>    
 
         </section>

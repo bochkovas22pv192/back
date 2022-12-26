@@ -14,9 +14,10 @@ function Home() {
 
     useEffect( () =>{
         //if (isLogin?.auth === true){
+        if (localStorage.getItem('access') !== undefined){
             console.log("nehahahahha")
             getCurs(setCursData);
-        //}
+        }
         
     }, [])
 

@@ -16,17 +16,23 @@ class CursView (viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     def get_queryset(self):
         user_name = self.request.query_params.get('username', None)
+        #print(user_name)
         if user_name:
             return Curs.objects.filter(members__username=user_name).order_by('date')
         return Curs.objects.all()
     serializer_class = CursSerializer
 
+class CursViewByID (viewsets.ModelViewSet):
+    serializer_class = CursSerializer
+    queryset = Curs.objects.all()
+
 
 class LectionsView (viewsets.ModelViewSet):
     def get_queryset(self):
         curs_id = self.request.query_params.get('curs_id', None)
+        print(curs_id)
         if curs_id:
-            return Lections.objects.filter(curs__id=curs_id).order_by('lections_date')
+            return Lections.objects.filter(curs__id=curs_id).order_by('date')
         return Lections.objects.all()
     serializer_class = LectionsSerializer
 

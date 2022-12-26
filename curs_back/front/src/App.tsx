@@ -19,11 +19,9 @@ function App() {
     <Header />
     <Routes>
           <Route path="/" element={ <Home /> } />
-          <Route path="/curs/" element={ <Curs /> } />
-          <Route path="/curs/task/" element={ <CursTask /> } />
+          <Route path="/curs/:cursId" element={ <Curs /> } />
+          <Route path="/curs/task/:lectionsId" element={ <CursTask /> } />
           <Route path="/login" element={ <Login /> } />
-          <Route path="/add/curs/" element={ <CursTask /> } />
-          <Route path="/add/lecture/" element={ <CursTask /> } />
     </Routes>
     <Footer />
     </div>
