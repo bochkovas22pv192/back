@@ -13,8 +13,11 @@ function Home() {
     const [cursData, setCursData] = React.useState<CursData[]>([]);
 
     useEffect( () =>{
-        console.log(isLogin?.auth === true)
-        getCurs(setCursData);
+        //if (isLogin?.auth === true){
+            console.log("nehahahahha")
+            getCurs(setCursData);
+        //}
+        
     }, [])
 
     const isLogin = React.useContext(accContext);

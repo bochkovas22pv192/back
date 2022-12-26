@@ -3,10 +3,10 @@ import { baseURL } from '../constants';
 import NewsData from '../models/CursData';
 
 
-const newsPath = baseURL + '/api/curs/'
+const newsPath = baseURL + '/curs/'
 
 function parseJwt (token: any) {
-    console.log("error2")
+    console.log(token)
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
@@ -16,9 +16,10 @@ function parseJwt (token: any) {
 }
 export async function getCurs(resultHandler: (data: any)=>void){
     console.log("error1")
+    const user_name = parseJwt(localStorage.getItem('access')).name
     Axios.get(
-        newsPath+parseJwt(localStorage.get('access')).name+'/',
-        { params:{}, responseType: "json" }
+        newsPath,
+        { params:{username:user_name}, responseType: "json" }
     ).then
     (result => {
         const data: NewsData[] = (result as AxiosResponse<NewsData[]>).data;

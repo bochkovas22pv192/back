@@ -16,9 +16,10 @@ export async function postLogin(data:LoginValues, context: AuthContext|null ){
         localStorage.setItem('refresh', result.data.refresh)
         localStorage.setItem('access', result.data.access)
         context?.setAuth(true)
-        console.log("Zashol")
+        
     })
     .catch((error: AxiosError) => {
         alert(error.message);
     });
+    
 }
