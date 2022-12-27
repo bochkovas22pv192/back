@@ -49,7 +49,7 @@ return (
     <hr />
     <form className="mt-4" >
         <div className="mb-4">
-            <div><label>Email</label></div>
+            <div><label>Login</label></div>
             <div><input type="text" className="w-100" name="email" required onChange={evt => handleLogin(evt)}  /></div>
             {(isPressed && login === '') && <div className="errors">Заполните "Логин"</div>}
         </div>

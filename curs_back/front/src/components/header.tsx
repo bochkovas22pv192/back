@@ -1,26 +1,43 @@
 import "../css/header.css";
 import { Link } from "react-router-dom";
 import React, { useEffect } from 'react';
-import accContext from "./authContext";
+import accContext from "../components/authContext";
 import ExitButton from '../components/exitButton';
 import SideMenuPart from '../components/sideMenuPart';
 import CursData from '../models/CursData';
 import {getCurs} from '../apis/cursApi';
+import { cursSet } from "../apis/cursSetApi";
+import { useNavigate, NavigateFunction} from "react-router-dom";
+
+
 
 
 
 function Header() {
+    const navigate: NavigateFunction = useNavigate();
     const isLogin = React.useContext(accContext);
     const [cursData, setCursData] = React.useState<CursData[]>([]);
+    const [cursCode, setCursCode] = React.useState<string>('');
 
     useEffect( () =>{
-        //if (isLogin?.auth === true){
-        if (localStorage.getItem('access') !== undefined){
-            console.log("nehahahahha")
+        if (isLogin?.auth === true){
             getCurs(setCursData);
         }
         
-    }, [])
+    }, [isLogin?.auth])
+
+    function handleAddCurs(event: any) {
+        event.preventDefault()
+        setCursCode(event.target.value.trim())
+    }
+
+    function handleSubmit(event: any) {
+        event.preventDefault()
+        if (cursCode.length === 8) {
+            cursSet(cursCode, 1, isLogin, navigate)
+            navigate("/buff")
+        }
+    };
 
     return (
         <header>
@@ -74,13 +91,13 @@ function Header() {
                                         <form>
                                             <div className="mb-3">
                                                 <label  className="col-form-label">Введите ID курса:</label>
-                                                <input type="text" className="form-control" id="recipient-name"/>
+                                                <input type="text" className="form-control" onChange={evt => handleAddCurs(evt)} id="recipient-name"/>
                                             </div>
-                                            <div className="errors">Курса с таким ID не существует</div>
+                                            {/* <div className="errors">Курса с таким ID не существует</div> */}
                                         </form>
                                     </div>
                                     <div className="modal-footer">
-                                        <button type="button" className="btn btn-primary">Присоединиться</button>
+                                        <button type="button" className="btn btn-primary" onClick={(event) => handleSubmit(event)}>Присоединиться</button>
                                     </div>
                                 </div>
                             </div>

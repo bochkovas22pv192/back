@@ -20,12 +20,21 @@
     align-items: center;
     justify-content: center;
     border: none;
-    padding: 35px;
+    padding: 25px;
+    padding-left: 45px;
+    padding-right: 45px;
+}
+.title-all .descr{
+    display:flex;
+    border: none;
+    padding-bottom: 30px;
     padding-left: 45px;
     padding-right: 45px;
 }
 
 .leave-button{
+    padding-top: 20px;
+    padding-bottom: 10px;
     display:flex;
     align-items: center;
     justify-content: center;

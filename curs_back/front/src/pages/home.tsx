@@ -12,16 +12,16 @@ function Home() {
 
     const [cursData, setCursData] = React.useState<CursData[]>([]);
 
+    const isLogin = React.useContext(accContext);
+
     useEffect( () =>{
-        //if (isLogin?.auth === true){
-        if (localStorage.getItem('access') !== undefined){
-            console.log("nehahahahha")
+        if (isLogin?.auth === true){
             getCurs(setCursData);
         }
         
-    }, [])
+    }, [isLogin?.auth])
 
-    const isLogin = React.useContext(accContext);
+    
 return (
     <div>
      <main className="cont">

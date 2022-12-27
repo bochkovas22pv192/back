@@ -8,8 +8,10 @@ function ExitButton (){
     const isLogin = React.useContext(accContext);
 
     function exitAcc (){
+        localStorage.clear()
+        isLogin?.setAuth(false)
         navigate('/');
-        isLogin!.setAuth(false)
+       
         return undefined
     };
 

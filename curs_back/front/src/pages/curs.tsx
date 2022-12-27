@@ -7,13 +7,20 @@ import LectionsData from '../models/LectionsData'
 import {getCurs} from '../apis/cursApi';
 import {getLections} from '../apis/lectionsApi';
 import CursLentaPart from '../components/cursLentaPart';
+import { cursSet } from "../apis/cursSetApi";
+import { useNavigate, NavigateFunction} from "react-router-dom";
+import accContext from "../components/authContext";
 
 const Curs = () =>  {
 
+
+    const navigate: NavigateFunction = useNavigate();
+    const isLogin = React.useContext(accContext);
     const {cursId} = useParams()
     const [cursData, setCursData] = React.useState<CursData>({
         id: 0,code:'',name:'',descr:'', preview_img:'', main_img:'', author:'', date:''});
     const [lectionData, setLectionsData] = React.useState<LectionsData[]>([]);
+    const [cursCode, setCursCode] = React.useState<string>('');
 
     useEffect( () =>{
         getCurs(setCursData, cursId)
@@ -23,20 +30,32 @@ const Curs = () =>  {
         getLections(setLectionsData,'', cursId)
     }, [cursId])
 
+    function handleSubmit(event: any) {
+        event.preventDefault()
+        setCursCode(cursData.code)
+        if (cursCode.length === 8) {
+            cursSet(cursCode, 0, isLogin, navigate)
+            navigate("/buff")
+        }
+    };
+
 return (
     <div className="container">
         <div className="title-all">
             <img className="curs-logo" src={cursData.main_img} alt="curs-main-img"  />
             <div className="title">
                     <h3> {cursData.name} </h3>
+
             </div>
+            <div className='descr'><h5>{cursData.descr}</h5></div>
         </div>
        
         <section className="lenta">
         {lectionData.map(lections => <CursLentaPart {...lections} key={lections.id} />)}
 
-        <div className="leave-button"> <button type="button"  className="btn  btn-outline-danger btn-lg">Покинуть курс</button></div>    
-
+        {isLogin?.auth === true &&
+        <div className="leave-button"> <button type="button" onClick={(event) => handleSubmit(event)}  className="btn   btn-outline-danger btn-lg">Покинуть курс</button></div>    
+        }
         </section>
     </div>
 
