@@ -18,6 +18,14 @@ function Header() {
     const isLogin = React.useContext(accContext);
     const [cursData, setCursData] = React.useState<CursData[]>([]);
     const [cursCode, setCursCode] = React.useState<string>('');
+    const [flag, setFlag] = React.useState<number>(-1);
+
+    useEffect( () =>{
+        if (isLogin?.auth === true){
+            getCurs(setCursData);
+        }
+        
+    }, [isLogin?.auth])
 
     useEffect( () =>{
         if (isLogin?.auth === true){
@@ -31,14 +39,29 @@ function Header() {
         setCursCode(event.target.value.trim())
     }
 
+    useEffect( () =>{
+        if (flag===1){
+            const setCurs = async () => {
+                const temp = await cursSet(cursCode, 1, isLogin, navigate)
+                setFlag(-1)
+                navigate("/buff")
+            }
+            setCurs()
+        }
+        
+    }, [cursCode, isLogin, navigate, flag])
+
     function handleSubmit(event: any) {
         event.preventDefault()
         if (cursCode.length === 8) {
-            cursSet(cursCode, 1, isLogin, navigate)
-            navigate("/buff")
+            
+            setFlag(1)
+            
         }
     };
+    
 
+    
     return (
         <header>
             <div className="offcanvas offcanvas-start" id="demo">
@@ -74,7 +97,7 @@ function Header() {
                                 Класс
                             </span>
                         </div>
-                    </Link>    
+                    </Link>   
                     
                 </div>
                 <nav>
@@ -102,6 +125,7 @@ function Header() {
                                 </div>
                             </div>
                         </div>
+                        {isLogin?.auth === false && <Link className="home-link" to="/signup"><li> <button type="button"className="btn btn-outline-secondary" >Регистрация</button></li> </Link>}
                         {isLogin?.auth === false && <Link className="home-link" to="/login"><li> <button type="button"className="btn btn-outline-secondary" >Вход</button></li> </Link>}
                         {isLogin?.auth === true && <li> <ExitButton /> </li> }
                     </ul>

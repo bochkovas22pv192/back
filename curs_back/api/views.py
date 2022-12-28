@@ -28,11 +28,12 @@ class CursViewChange (APIView):
         curs_code = body.get('curs_code')
         user_name = body.get('user_name')
         flag = body.get('flag')
+        curs = Curs.objects.filter(code=curs_code).first()
+        if curs==None:
+            return Response(status = status.HTTP_400_BAD_REQUEST)
         if (flag):
-            curs = Curs.objects.filter(code=curs_code).first()
             curs.members.add(User.objects.filter(username=user_name).first())
         else:
-            curs = Curs.objects.filter(code=curs_code).first()
             curs.members.remove(User.objects.filter(username=user_name).first())
         
         return Response(status = status.HTTP_200_OK)

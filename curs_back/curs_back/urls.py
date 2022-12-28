@@ -24,6 +24,7 @@ from api.views import MyTokenObtainPairView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
+    path('api/dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/auth/token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/auth/token/check/', TokenVerifyView.as_view(), name='token_check'),

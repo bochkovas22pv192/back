@@ -21,6 +21,7 @@ const Curs = () =>  {
         id: 0,code:'',name:'',descr:'', preview_img:'', main_img:'', author:'', date:''});
     const [lectionData, setLectionsData] = React.useState<LectionsData[]>([]);
     const [cursCode, setCursCode] = React.useState<string>('');
+    const [flagCurs, setFlagCurs] = React.useState<number>(-1);
 
     useEffect( () =>{
         getCurs(setCursData, cursId)
@@ -30,13 +31,23 @@ const Curs = () =>  {
         getLections(setLectionsData,'', cursId)
     }, [cursId])
 
+    useEffect( () =>{
+        if (flagCurs===1){
+            const setCurs = async () => {
+                const temp = await cursSet(cursCode, 0, isLogin, navigate)
+                setFlagCurs(-1)
+                navigate("/buff")
+            }
+            setCurs()
+        }
+        
+    }, [cursCode, isLogin, navigate, flagCurs])
+    
+
     function handleSubmit(event: any) {
         event.preventDefault()
         setCursCode(cursData.code)
-        if (cursCode.length === 8) {
-            cursSet(cursCode, 0, isLogin, navigate)
-            navigate("/buff")
-        }
+        setFlagCurs(1)
     };
 
 return (

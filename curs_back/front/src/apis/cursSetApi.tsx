@@ -58,7 +58,7 @@ export async function cursSet(cursCode:string, flag:number, auth_context:AuthCon
         flag:flag 
     }
 
-    api.post(
+    return api.post(
         runPath,
         json, 
         {

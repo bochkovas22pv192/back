@@ -9,6 +9,7 @@ import Curs from "./pages/curs";
 import CursTask from "./pages/cursTask";
 import Login from "./pages/login";
 import Buff from "./pages/buff";
+import Signup from "./pages/signup";
 function App() {
 
   const [auth, setAuth] = React.useState<boolean>(false);
@@ -24,6 +25,7 @@ function App() {
           <Route path="/curs/task/:lectionsId" element={ <CursTask /> } />
           <Route path="/login" element={ <Login /> } />
           <Route path="/buff" element={ <Buff /> } />
+          <Route path="/signup" element={ <Signup /> } />
     </Routes>
     <Footer />
     </div>
